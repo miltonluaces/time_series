@@ -3,7 +3,7 @@ import pandas as pd
 
 # Determine inflection points 
 def GetInflectionPointIdxs(ts):
-    ip = np.zeros(len(ts))
+    ip = np.zeros(len(ts), dtype='int')
     for i in (range(1,len(ts)-1)):
         if(ts[i] > ts[i-1] and ts[i] > ts[i+1]):
            ip[i] = 1
