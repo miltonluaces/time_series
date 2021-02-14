@@ -1,5 +1,7 @@
-import numpy as np
-import pandas as pd
+import sys
+sys.path.append('D:/source/repos')
+from utilities.std_imports import *
+#import time_series.analysis.integrals as ig
 
 # Determine inflection points 
 def GetInflectionPointIdxs(ts):

@@ -1,7 +1,10 @@
+import sys
+sys.path.append('D:/source/repos')
+from utilities.std_imports import *
 from scipy import integrate
-from TSAnalysis.Splines import GetIPSeries
-from TSAnalysis.Splines import GetInflectionPointIdxs
-  
+import time_series.analysis.integrals as ig
+import time_series.trend_analysis.splines as sp
+
 # Integral of Ts, integral of the abs error and rel abs error 
 def TsIntegError(ts1, ts2):
     err = abs(ts1 - ts2)
@@ -12,7 +15,7 @@ def TsIntegError(ts1, ts2):
 
 # Relative integral error : i.e./ n points for ts and interpolation
 def TsIntegRelPointError(ts, points):
-    ips, nPs = GetIPSeries(ts, points)
+    ips, nPs = sp.GetIPSeries(ts, points)
     integTs, integErr, relErr = TsIntegError(ts, ips)
     integIps = integTs - integErr
     irpeTs = integTs
@@ -21,7 +24,7 @@ def TsIntegRelPointError(ts, points):
     return(irpeTs, irpeIps)
     
 def OptimIrpe(ts, decRate=0.999, trace=False):
-    points = GetInflectionPointIdxs(ts)
+    points = sp.GetInflectionPointIdxs(ts)
     irpe1, irpe2 = TsIntegRelPointError(ts, points)
     #if(trace):
         #print('irpe1 = ', '{0:.2f}'.format(irpe1))

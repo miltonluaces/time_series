@@ -38,9 +38,16 @@ def gen_ts_fcst(ts_hist, fcst):
     idx = index=range(len(ts_hist), len(ts_hist)+len(fcst))
     return pd.Series(data=fcst, index=idx)
 
+# Time series to Dataframe with column of indexes
+def Ts2DfIdxed(ts):
+      idx = np.arange(0, len(ts))
+      df = pd.DataFrame(idx,ts)
+      df.set_index(idx)
+      return df
+
     
 if __name__ == "__main__":
-    print('test basic_utils')
+    print('test basic_utils\n')
 
     idxs = [0, 4, 6, 7, 12, 15, 18]
     ba = idx2bin_array(idxs)
