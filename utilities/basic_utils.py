@@ -45,6 +45,19 @@ def Ts2DfIdxed(ts):
       df.set_index(idx)
       return df
 
+# Split time series
+def split_ts(ts, nSplits):
+    ts_length = len(ts)
+    per_length = int(ts_length / nSplits)
+    tss = []
+    start = 0
+    end = 0
+    for i in range(nSplits):
+        if(abs(ts_length - end) < per_length) : end = ts_length
+        else: end = start + per_length
+        tss.append(ts[start:end])
+        start = end+1
+    return tss
     
 if __name__ == "__main__":
     print('test basic_utils\n')
