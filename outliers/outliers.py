@@ -1,5 +1,3 @@
-import sys
-sys.path.append('D:/source/repos')
 from utilities.std_imports import *
 import sklearn as sk
 import sklearn.datasets as skds

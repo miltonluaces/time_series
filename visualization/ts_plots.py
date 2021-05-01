@@ -1,5 +1,3 @@
-import sys
-sys.path.append('D:/source/repos')
 from utilities.std_imports import *
 import time_series.utilities.basic_utils as bu
 
@@ -54,4 +52,19 @@ def plot_high_mask(ts, mask):
     plt.plot(xs, ts, linestyle='-', color='blue')
     plt.plot(xs[mask], ts[mask], ':', color='red', linewidth=0, marker='o')
     plt.show()
+    
+def plot_compare(ts1, ts2):
+    fig, ax1 = plt.subplots(1,1,figsize=(22,6), dpi= 80)
+    ax1.plot(ts1, color='tab:blue', linewidth=2)
+
+    ax2 = ax1.twinx() 
+    ax2.plot(ts2, color='tab:red', linewidth=0.5)
+
+    ax1.set_xlabel('time', fontsize=12)
+    ax1.set_ylabel('units', fontsize=12)
+
+    ax1.tick_params(axis='x', rotation=0, labelsize=12)
+    ax1.tick_params(axis='y', rotation=0, labelsize=12)
+
+    ax1.grid(alpha=.4);
     

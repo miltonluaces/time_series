@@ -1,7 +1,5 @@
-import numpy as np
-import pandas as pd
+from utilities.std_imports import *
 from datetime import datetime
-import matplotlib.pyplot as plt
 from math import sqrt
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import LabelEncoder
@@ -30,8 +28,29 @@ def var_name(col, t):
         vn = vn + str(t) 
     return vn + ')'
 
+# Build dataset to train univariate models (ds: dataset, mw: moving window, fh: forecast horizon )
+def build_ds_uni(ds, mw=1, fh=1):
+    n_vars = ds.shape[1]
+    cols, col_names = list(), list()
+    
+    # input sequence (t-n, ... t-1)
+    for i in range(mw, 0, -1):
+        cols.append(ds.shift(i))
+        col_names += [('var%d(t-%d)' % (j+1, i)) for j in range(n_vars)]
+        
+    # fcst sequence (t, t+1, ... t+n)
+    for i in range(0, fh):
+        cols.append(ds.shift(-i))
+        if i == 0:
+            col_names += [('var%d(t)' % (j+1)) for j in range(n_vars)]
+        else:
+            col_names += [('var%d(t+%d)' % (j+1, i)) for j in range(n_vars)]
+    
+    df_sup = pd.concat(cols, axis=1)
+    df_sup.columns = col_names
+    return df_sup
 
-# Build dataset to train uni/multivariate models (vobs: observable column names, vreg: regressor column names, fh: forecast horizon )
+# Build dataset to train uni/multivariate models (vobs: observable column names, vreg: regressor column names,  mw: moving window, fh: forecast horizon )
 def build_ds(df, vobs=[], vreg=[], mw=1, fh=1, dropnan=True):
     
     vars = vobs.copy()

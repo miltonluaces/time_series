@@ -1,5 +1,3 @@
-import sys
-sys.path.append('D:/source/repos')
 from utilities.std_imports import *
 from scipy import integrate
 import time_series.analysis.integrals as ig
